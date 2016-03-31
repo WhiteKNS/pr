@@ -18,9 +18,10 @@ define([
         'LocalStorageModule',
         'toastr',
         'myAppServices',
-        'mainAppControllers'
+        'mainAppControllers',
     ]);
 
+    
 
     mainApp.config(['$httpProvider',function ($httpProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
@@ -99,6 +100,12 @@ define([
                     controllerAs: 'vm',
                     access: { requiredLogin: true }
                 }).
+            when('/search', {
+                templateUrl: 'partials/search',
+                controller: 'SearchCtrl',
+                controllerAs: 'vm',
+                access: { requiredLogin: false }
+            }).
                 otherwise({
                     redirectTo: '/login'
                 });

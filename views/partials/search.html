@@ -1,0 +1,64 @@
+<div ng-include src="'partials/nav.html'"></div>
+<div ng-include src="'partials/header.html'"></div>
+
+<h1>Google maps</h1>
+
+<!DOCTYPE HTML>
+<html lang="en-US" ng-app="mapPositioningApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Maps positioning</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://code.angularjs.org/1.3.14/angular.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+    <script src="http://rawgit.com/angular-ui/angular-google-maps/2.0.X/dist/angular-google-maps.js"></script>
+    <script type='text/javascript' src='script.js'></script><!--script-->
+    <!--css-->
+
+</head>
+<body ng-controller="SearchCtrl">
+
+<header>Google maps positioning</header>
+<div class="hint">Click on a city name to view it on the map</div>
+<div class="content">
+    <div id="cities">
+        <ul>
+            <li ng-repeat="city in cities" ng-click="showCity(city)">{{ city.city }}</li>
+        </ul>
+    </div>
+    <div id="map" ng-init="initialize()">
+
+    </div>
+</div>
+
+<div id="map_canvas" style="width: 600px; height: 400px"></div>
+
+
+<ui-gmap-markers models="markers" idkey="markers.id" coords="'coords'" click="'onClick'" events="markers.events"></ui-gmap-markers>
+<!--
+
+<div ng-cloak>
+    <ul>
+        <li>coords update ctr: {{coordsUpdates}}</li>
+        <li>dynamic move ctr: {{dynamicMoveCtr}}</li>
+    </ul>
+</div>
+-->
+<!--<input type = "text" ng-model ="query">-->
+
+<li ng-repeat = "city in cities | filter:query">
+
+    <span>{{cities.city}}</span>
+    <p>
+
+
+    </p>
+</li>
+<!--
+<script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

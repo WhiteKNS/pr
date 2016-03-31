@@ -11,6 +11,8 @@ module.exports = function(models){
 
             var body = req.body;
 
+
+
             User.findOne({ username: body.username
             },function(err, user) {
                 if (err)
@@ -19,7 +21,12 @@ module.exports = function(models){
                 if (user) {
                     res.send(403, {'message': 'User already exist!'});
                 }else {
-                    var newUser = new User({ username: body.username,email: body.email, password:body.password})
+                    
+                  
+                    var newUser = new User({ username: body.username,email: body.email, password:body.password});
+
+
+
                     newUser.save(function (err, user) {
                         if (err){
                             res.send(500, {'message': err});
@@ -32,7 +39,14 @@ module.exports = function(models){
 
         login:function(req,res)
         {
+            console.log("login: function()   api.js");
             res.json({ auth_token: req.user.token.auth_token});
+        },
+
+        search:function(req,res)
+        {
+            console.log("search function()   api.js");
+            res.json({'message' : 'Searching'});
         },
 
         logout: function(req,res)
@@ -165,6 +179,3 @@ module.exports = function(models){
     }
 
 }
-
-
-

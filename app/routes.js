@@ -64,6 +64,11 @@ module.exports = function(app, passport,models) {
 
 
 
+    app.post('/api/search', showClientRequest, passport.authenticate('local-login', {
+        session: false
+    }),api.search);
+
+
 
 
 

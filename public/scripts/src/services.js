@@ -77,8 +77,11 @@ define(['angular'], function (angular) {
             },
             login : function(user){
                 return _ajaxRequest('POST', '/api/login', user, null);
-            }
+            },
 
+            search: function(){
+                return _ajaxRequest('POST', '/api/search', null);
+            },
 
         }
     }

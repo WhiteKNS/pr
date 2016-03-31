@@ -1,8 +1,9 @@
 require.config({
     baseUrl: '../scripts',
-    paths :{
+    paths : {
         'app' : 'src/app',
         'controllers' : 'src/controllers',
+        'directives' : 'src/directives',
         'services' : 'src/services',
         'angular' :'lib/angular/angular.min',
         'angularRoute' : 'lib/angular-route/angular-route.min',

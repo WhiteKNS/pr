@@ -9,6 +9,226 @@ define(['angular'], function (angular) {
     mainAppControllers.controller('PersonCtrl', ['ResourceService', 'toastr', PersonCtrl]);
     mainAppControllers.controller('ThingCtrl', ['ResourceService', 'toastr', ThingCtrl]);
     mainAppControllers.controller('ProvaCtrl', [ProvaCtrl]);
+    mainAppControllers.controller('SearchCtrl', ['$scope', '$http',  '$timeout', function($scope, $http,  $timeout) {
+        $scope.cities = [];
+        $scope.map;
+
+        $scope.infoBox = new google.maps.InfoWindow();
+
+        $scope.options = {scrollwheel: false,
+        };
+        $scope.coordsUpdates = 0;
+        $scope.dynamicMoveCtr = 0;
+
+        var mapContainer = document.getElementById('map');
+        mapContainer.style.width = '70%';
+        mapContainer.style.height = '500px';
+/*
+        var marker = {
+            idKey: 123,
+            coords: {
+                latitude: 37.7836377,
+                longitude: -122.4132168
+            }
+        };
+*/
+
+        $http.get('data.json').success(function(data) {
+            console.log("Get cities "+ data);
+            $scope.cities = data;
+        });
+
+        // add test locations for example
+        $scope.locations = {
+            spots: [
+                {
+                    number: 1,
+                    latitude: 37.7836377,
+                    longitude: -122.4132168
+                },
+                {
+                    number: 2,
+                    latitude: 37.7850504,
+                    longitude: -122.4146064
+                },
+                {
+                    number: 3,
+                    latitude: 37.807735,
+                    longitude: -122.418553
+                }
+            ]
+        };
+
+        $scope.markers = [];
+
+        var infoWindow = new google.maps.InfoWindow();
+
+        var createMarker = function (info){
+
+            var marker = new google.maps.Marker({
+                map: $scope.map,
+                position: new google.maps.LatLng(info.lat, info.long),
+                title: info.place
+            });
+            marker.content = '<div class="infoWindowContent">' + info.desc + '<br />' + info.lat + ' E,' + info.long +  ' N, </div>';
+
+            google.maps.event.addListener(marker, 'click', function(){
+                infoWindow.setContent('<h2>' + marker.title + '</h2>' +
+                    marker.content);
+                infoWindow.open($scope.map, marker);
+            });
+
+            $scope.markers.push(marker);
+
+        }
+
+        
+        for (var i = 0; i < cities.length; i++){
+            createMarker(cities[i]);
+        }
+
+        var marker = {
+            idKey: 123,
+            coords: {
+                latitude: 50.5,
+                longitude: 30.5
+            }
+        };
+
+        $scope.marker = marker;
+
+        $scope.openInfoWindow = function(e, selectedMarker){
+            e.preventDefault();
+            google.maps.event.trigger(selectedMarker, 'click');
+        }
+
+
+
+            /*
+        $scope.markers = [];
+        // function to create an individual marker
+        $scope.createMarker = function(location) {
+            var marker = {
+                idKey: location.number,
+                coords: {
+                    latitude: location.latitude,
+                    longitude: location.longitude
+                }
+            };
+            return marker;
+        };
+
+*/
+        $scope.initialize = function() {
+            var mapOptions = {
+                center: new google.maps.LatLng(50.5, 30.5),
+                zoom: 8,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            $scope.map = new google.maps.Map(mapContainer, mapOptions);
+        }
+
+        $scope.showCity = function(city) {
+            console.log('1' + city.city + ' '+ city.lat + ' ' + city.long);
+          //  var coords = new google.maps.LatLng(city.lat, city.long);
+
+
+
+            $scope.infoBox.setContent(city.city + ' - ' + city.desc);
+
+          //  $scope.infoBox.setPosition(city.lat, city.long);
+
+          // $scope.marker.setPosition({position: {lat: city.lat, lng: city.long}, map: $scope.map});
+
+
+           var mapOptions = {
+                center: new google.maps.LatLng(city.lat, city.long),
+                zoom: 8,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+
+            };
+            $scope.map = new google.maps.Map(mapContainer, mapOptions);
+
+            new google.maps.Marker({position: {lat: city.lat, lng: city.long}, map: $scope.map});
+            $scope.infoBox.open($scope.map);
+            $scope.map.setCenter(city.lat, city.long);
+
+
+        }
+
+        $scope.loadMarkers = function(locations)
+        {
+            console.log(locations);
+            $scope.markers = _map(locations, function(location, key){
+                return{
+                    latitude:parseFloat(location.lat),
+                    longitude: parseFloat(location.lng),
+                    maxWidth: 300,
+
+                }
+
+            })
+
+        }
+
+        // function to fill array of markers
+        $scope.createMarkers = function() {
+            for (var i = 0; i < $scope.locations.spots.length; i++) {
+                var marker = $scope.createMarker($scope.locations.spots[i]);
+                $scope.markers.push(marker);
+            }
+        };
+        // call upon controller initialization
+
+
+/*
+        $scope.marker = {
+            id: 0,
+            coords: {
+                latitude: 40.1451,
+                longitude: -99.6680
+            },
+            options: { draggable: true },
+            events: {
+                dragend: function (marker, eventName, args) {
+                    $log.log('marker dragend');
+                    var lat = marker.getPosition().lat();
+                    var lon = marker.getPosition().lng();
+                    $log.log(lat);
+                    $log.log(lon);
+
+                    $scope.marker.options = {
+                        draggable: true,
+                        labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+                        labelAnchor: "100 0",
+                        labelClass: "marker-labels"
+                    };
+                }
+            }
+        };
+
+        $scope.$watchCollection("marker.coords", function (newVal, oldVal) {
+            if (_.isEqual(newVal, oldVal))
+                return;
+            $scope.coordsUpdates++;
+        });
+
+        $timeout(function () {
+            $scope.marker.coords = {
+                latitude: 42.1451,
+                longitude: -100.6680
+            };
+            $scope.dynamicMoveCtr++;
+            $timeout(function () {
+                $scope.marker.coords = {
+                    latitude: 43.1451,
+                    longitude: -102.6680
+                };
+                $scope.dynamicMoveCtr++;
+            }, 2000);
+        }, 1000);
+*/
+    }]);
 
     function ProvaCtrl() {
         var vm = this;
@@ -20,6 +240,20 @@ define(['angular'], function (angular) {
         var vm = this;
         return "Hello World "+vm.user;
     };
+
+
+    function SearchCtrl ()
+    {
+        console.log("In search ctrl");
+    }
+
+    SearchCtrl.prototype.search= function($scope)
+    {
+
+    };
+
+
+
 
 
     function NavCtrl($location, localStorageService, AuthenticationService)
@@ -41,6 +275,7 @@ define(['angular'], function (angular) {
 
     function LoginCtrl ($location, ResourceService, CryptoJS, localStorageService, toastr)
     {
+        console.log("In login ctrl");
         var vm = this;
         vm.$location = $location;
         vm.ResourceService = ResourceService;
@@ -53,8 +288,11 @@ define(['angular'], function (angular) {
 
     LoginCtrl.prototype.submit = function()
     {
+        console.log("In login ctrl 22222222222");
         var vm = this;
         var salt = vm.username;
+
+
         var enc_password = CryptoJS.PBKDF2(vm.password, salt, { keySize: 256/32 });
 
         var user = {"username": vm.username, "password": enc_password.toString()};
@@ -95,18 +333,44 @@ define(['angular'], function (angular) {
 
         var user = {"username": vm.username, "password": enc_password.toString(), "check_password" : enc_check_password.toString() };
 
+ 
+
         if(vm.username!==undefined || vm.password !==undefined || vm.check_password !==undefined){
             if(vm.password !== vm.check_password){
                 vm.toastr.warning('password and check_password must be the same!');
-            }else{
-                vm.ResourceService.signup(user).then(function(){
+            }
+
+            else {
+
+
+
+                var adr=vm.username;
+                var adr_pattern=/[0-9a-z_]+@[0-9a-z_]+\.[a-z]{2,5}/i;
+                var prov=adr_pattern.test(adr);
+
+                console.log('Here');
+
+                console.log(adr);
+                console.log(prov);
+                
+                if (prov!=true)
+                {
+                    vm.toastr.warning('write valid email!');
+                }
+                else
+                if (vm.password.length < 5) {
+                    vm.toastr.warning('password must be with minimum 5 elements!');
+                }
+                else{
+                vm.ResourceService.signup(user).then(function () {
                     vm.toastr.success('User successfully registered!');
                     vm.username = null;
                     vm.password = null;
                     vm.check_password = null;
-                },function(data) {
+                }, function (data) {
                     vm.toastr.error(data.message);
                 });
+            }
             }
         }else{
             noty({text: 'Username and password are mandatory!',  timeout: 2000, type: 'warning'});
