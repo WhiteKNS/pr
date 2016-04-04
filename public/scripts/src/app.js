@@ -98,7 +98,7 @@ define([
                     templateUrl: 'partials/auth/thing',
                     controller: 'ThingCtrl',
                     controllerAs: 'vm',
-                    access: { requiredLogin: true }
+                    access: { requiredLogin: false }
                 }).
             when('/search', {
                 templateUrl: 'partials/search',
