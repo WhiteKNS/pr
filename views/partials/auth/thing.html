@@ -1,0 +1,61 @@
+<div ng-include src="'partials/nav.html'"></div>
+<div ng-include src="'partials/header.html'"></div>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+            <div class="panel panel-info">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Thing</div>
+
+                <div class="row">
+
+                    <div class="col-md-10 col-md-offset-1">
+
+                        <form ng-submit="vm.createThing()" role="form" class="form-inline">
+                            <fieldset>
+                                <legend>Create new Thing</legend>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.city" placeholder="Type city .." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.description" placeholder="Type trail description.." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.title" placeholder="Type title.." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.lat" placeholder="Type lat.." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.long" placeholder="Type longitude..." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.length" placeholder="Type length..." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.type" placeholder="Type  type..." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="vm.thing.dogAllowed" placeholder="Dog Allowed..." required>
+                                </div>
+                                <input type="submit" class="btn btn-primary" value="Create"/>
+                            </fieldset>
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <br>
+                <br>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

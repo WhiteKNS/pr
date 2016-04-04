@@ -1,0 +1,44 @@
+
+[
+  {
+    "country": "Ukraine",
+    "city": ["Kiev, Zaporozhye", "Kharkov"],
+    "lat": [50.5, 51.5, 51.5],
+    "title": ["Chreschatic trail", "Hortitza trail", "Horkiy park trail"],
+    "long": [30.5, 31.5, 30.5],
+    "desc": "the capital of Ukraine"
+  },
+
+  {
+    "country": "Russia",
+    "city": ["Moscow", "Saint-Petersburg"],
+    "lat": [55.8, 57.4],
+    "long": [36.5, 28.16],
+    "title": ["Blajenny trail", "Cunst Camera trail"],
+    "desc": "the capital of Russian Federation"
+  },
+  {
+    "country": "Belarus",
+    "city": ["Minsk", "Homel"],
+    "lat":  [53.9, 54.1],
+    "long": [27.6, 27.8],
+    "title": ["Minsk trail", "cap trail"],
+    "desc": "the capital of Belarus"
+  },
+  {
+    "country": "Poland",
+    "city": ["Warsaw"],
+    "lat": [52.2],
+    "long": [21.0],
+    "title": ["Warshawa trail"],
+    "desc": "the capital of Poland"
+  },
+  {
+    "country": "Great Britain",
+    "city": ["London"],
+    "lat": [51.5],
+    "long": [-0.1],
+    "title": ["Wedsminster trail"],
+    "desc": "the capital of Great Britain"
+  }
+]

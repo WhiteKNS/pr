@@ -1,0 +1,31 @@
+/* app css stylesheet */
+
+.no-bottom-margin {
+    margin-bottom: 0px;
+    border-radius: 0px;
+}
+
+.hint {
+    color: #555;
+    padding: 1em 1em 1em 1.2em;
+}
+
+#cities {
+    float: left;
+    width: 30%;
+}
+
+#cities ul {
+}
+
+#cities ul li {
+    cursor: pointer;
+    padding-top: 0.5em;
+}
+
+#map {
+    float: right;
+}
+
+
+  
