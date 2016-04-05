@@ -10,6 +10,7 @@ define(['angular'], function (angular) {
     mainAppControllers.controller('ThingCtrl', ['ResourceService', 'toastr', ThingCtrl]);
     mainAppControllers.controller('ProvaCtrl', [ProvaCtrl]);
     mainAppControllers.controller('SearchCtrl', ['$scope', '$http',  '$timeout', function($scope, $http,  $timeout) {
+        var vm = this;
         $scope.cities = [];
         $scope.map;
 
@@ -335,24 +336,7 @@ define(['angular'], function (angular) {
         vm.things = data[1].things;
     }
 
-    HomeCtrl.prototype.updatePerson = function(index, modify)
-    {
-        var vm = this;
-        var person = vm.people[index];
-
-        if(modify){
-            vm.people[index].modify=true;
-        }else{
-            vm.ResourceService.updatePerson(person).then(function(){
-                vm.people[index].modify=false;
-                vm.toastr.success("Person successfully updated!");
-            },function(data, status) {
-                if(status!==401){
-                    vm.toastr.error(data);
-                }
-            });
-        }
-    };
+  
 
     HomeCtrl.prototype.updateThing = function(index, modify)
     {
@@ -389,42 +373,7 @@ define(['angular'], function (angular) {
         });
     };
 
-    HomeCtrl.prototype.deletePerson = function(index)
-    {
-        var vm = this;
-        var person = vm.people[index];
 
-        vm.ResourceService.deletePerson(person).then(function(){
-            vm.people.splice(index, 1);
-            vm.toastr.success("Person successfully deleted!");
-        },function(data, status) {
-            if(status!==401){
-                vm.toastr.error(data);
-            }
-        });
-    };
-
-    function PersonCtrl(ResourceService, toastr) {
-        var vm = this;
-        vm.person = null;
-        vm.ResourceService = ResourceService;
-        vm.toastr = toastr;
-    }
-
-    PersonCtrl.prototype.createPerson = function()
-    {
-        var vm = this;
-        var person = {person: vm.person};
-
-        vm.ResourceService.createPerson(person).then(function(data){
-            vm.person = null;
-            vm.toastr.success(data.message);
-        },function(data, status) {
-            if(status!==401){
-                vm.toastr.error(data);
-            }
-        });
-    };
 
 
     function ThingCtrl(ResourceService, toastr)
