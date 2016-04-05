@@ -48,9 +48,7 @@ define(['angular'], function (angular) {
         };
 
         return {
-            getPeople : function(refresh){
-                return _promisesGetter('GET','/api/people', null, "people", refresh);
-            },
+          
             getThings : function(refresh){
                 return _promisesGetter('GET','/api/things', null, "things", refresh);
             },
@@ -60,18 +58,11 @@ define(['angular'], function (angular) {
             deleteThing : function(thing){
                 return _ajaxRequest('DELETE', '/api/thing/'+thing._id, null, null);
             },
-            createPerson : function(person){
-                return _ajaxRequest('POST', '/api/person', person, null);
-            },
-            deletePerson : function(person){
-                return _ajaxRequest('DELETE', '/api/person/'+person._id, null, null);
-            },
+           
             updateThing : function(thing){
                 return _ajaxRequest('PUT', '/api/thing/'+thing._id, {thing : thing}, null);
             },
-            updatePerson: function(person){
-                return _ajaxRequest('PUT', '/api/person/'+person._id, {person : person}, null);
-            },
+            
             signup : function(user){
                 return _ajaxRequest('POST', '/api/signup', user, null);
             },
