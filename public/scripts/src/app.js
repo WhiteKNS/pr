@@ -88,12 +88,6 @@ define([
                     },
                     access: { requiredLogin: true }
                 }).
-                when('/person', {
-                    templateUrl: 'partials/auth/person',
-                    controller: 'PersonCtrl',
-                    controllerAs: 'vm',
-                    access: { requiredLogin: true }
-                }).
                 when('/thing', {
                     templateUrl: 'partials/auth/thing',
                     controller: 'ThingCtrl',
