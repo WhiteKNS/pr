@@ -29,21 +29,7 @@ module.exports = function(app, passport,models) {
         session: false
     }),api.logout);
 
-    app.get('/api/people', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.getPeople);
 
-    app.post('/api/person', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.createPerson);
-
-    app.put('/api/person/:id', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.updatePerson);
-
-    app.delete('/api/person/:id', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.removePerson);
 
     app.get('/api/things', showClientRequest, passport.authenticate('local-authorization', {
         session: false
